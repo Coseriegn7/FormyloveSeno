@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>For My Love 💕</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --pink:#ff7eb8;
+    --pink-2:#ff9ccc;
+    --accent:#ff4b93;
+    --gold:#d9b44a;
+    --bg:#fdeaff;
+  }
+  *{box-sizing:border-box}
+  body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    font-family: 'Poppins', sans-serif;
+    overflow-x: hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  h1,h2,h3,h4 { font-family: 'Pacifico', cursive; color: var(--pink); margin:8px 0; }
+
+  .heart {
+    position: fixed;
+    top: -10px;
+    color: var(--pink);
+    font-size: 20px;
+    animation: floatDown 5s linear infinite;
+    opacity: 0.8;
+    pointer-events:none;
+  }
+  @keyframes floatDown {
+    0% { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(100vh); opacity: 0; }
+  }
+  #landingPage {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+  }
+  #landingPage img { width:180px; margin-bottom:20px; filter: drop-shadow(0 0 5px #ffb3d9); animation: float 3s ease-in-out infinite; }
+  @keyframes float { 0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)} }
+  .landing-buttons{display:flex;gap:20px;}
+  .landing-btn{background:var(--pink-2);border:none;padding:12px 25px;border-radius:20px;color:white;font-size:16px;cursor:pointer;transition:.3s}
+  .landing-btn:hover{background:var(--pink);transform:scale(1.05)}
+  #mainContent{ display:none; opacity:0; transform:scale(.95); transition:opacity .8s ease, transform .8s ease;}
+  #mainContent.show{opacity:1; transform:scale(1)}
+  .container{ max-width:900px;margin:40px auto;background:white;padding:30px;border-radius:25px;box-shadow:0 4px 20px rgba(255,146,190,.25); text-align:center;}
+  button{background:var(--pink-2);border:none;padding:12px 25px;border-radius:20px;color:white;font-size:16px;cursor:pointer;margin:10px;transition:.25s}
+  button:hover{background:var(--pink);transform:scale(1.03)}
+  .hidden{display:none}
+  .box{ background:#ffe7f3;padding:20px;border-radius:15px;margin-top:20px;opacity:0;transform:translateY(20px);transition:opacity .5s ease, transform .5s ease;}
+  .box.show{opacity:1;transform:translateY(0)}
+  .song-card{ background:#ffe7f3;border-radius:15px;padding:15px;margin-top:15px;display:flex;gap:20px;box-shadow:0 4px 15px rgba(255,146,190,.3)}
+  .song-card img{ width:120px;border-radius:12px }
+  .song-card:hover{ transform:scale(1.03) }
+
+
+  .certificate-wrap {
+    display:flex;
+    gap:22px;
+    align-items:flex-start;
+    justify-content:center;
+    flex-wrap:wrap;
+    margin-top:18px;
+  }
+
+.certificate {
+  width: 800px;
+  padding: 40px;
+  background: #fff;
+  border: 6px solid #d59bf6;
+  box-shadow: 0 0 25px rgba(0,0,0,0.18);
+  border-radius: 14px;
+
+
+  box-sizing: border-box;
+  aspect-ratio: auto;
+  max-height: none;
+  position: relative;
+}
+
+.certificate::before,
+.certificate::after {
+  display: none; 
+}
+
+
+  .gold-corner {
+    position:absolute; width:60px; height:60px; opacity:.95;
+    background: radial-gradient(circle at 25% 25%, rgba(255, 238, 170, .95), rgba(217,180,74,.95));
+    border-radius:10px;
+    transform: rotate(0deg);
+    box-shadow: 0 2px 6px rgba(0,0,0,.06);
+    display:flex;align-items:center;justify-content:center;
+    font-size:18px;color:#fff;
+  }
+  .gold-corner.tl{ top: -8px; left:-8px; transform: rotate(15deg); }
+  .gold-corner.tr{ top: -8px; right:-8px; transform: rotate(-15deg); }
+  .gold-corner.bl{ bottom: -8px; left:-8px; transform: rotate(-15deg); }
+  .gold-corner.br{ bottom: -8px; right:-8px; transform: rotate(15deg); }
+
+  .cert-inner{ background: linear-gradient(180deg,#fff,#fff7fb); padding:26px; border-radius:12px; text-align:center; min-height:360px; position:relative; overflow:hidden; }
+
+  .cert-title { font-family:'Pacifico', cursive; font-size:26px; color:var(--accent); margin:4px 0 6px; letter-spacing:1px; }
+  .cert-top { font-weight:700; color:#d16b92; margin-bottom:8px; font-size:14px; text-transform:capitalize; }
+  .cert-sub { color:#c86b9a; font-weight:600; margin-bottom:12px; font-size:16px; }
+  .cert-line { height:1px; width:80%; margin:8px auto; background: linear-gradient(90deg, transparent, #ffd0e6, transparent); opacity:.7; }
+
+
+  .editable {
+    display:inline-block;
+    font-family:'Pacifico', cursive;
+    font-size:28px;
+    color:var(--accent);
+    padding:6px 10px;
+    border-radius:8px;
+    min-width:180px;
+    outline: none;
+    cursor:text;
+  }
+  .editable[contenteditable="true"] {
+    border-bottom: 2px dashed rgba(180,80,140,.15);
+  }
+
+  .cert-reason {
+    font-size:14px; color:#6b6b6b; margin:12px 30px; min-height:54px;
+    line-height:1.4;
+    white-space:pre-wrap;
+  }
+
+  .cert-footer {
+    display:flex; justify-content:space-between; align-items:center; margin-top:18px; padding:0 18px;
+    font-size:13px; color:#7b7b7b;
+  }
+
+  .seal {
+    width:84px; height:84px; border-radius:50%; background:radial-gradient(circle at 30% 20%, #fff7d6, #e6c86b);
+    display:inline-flex; align-items:center; justify-content:center; flex-direction:column; box-shadow:0 6px 18px rgba(217,180,74,.18); margin:0 auto;
+    font-weight:700; color:#7a4d05; font-size:12px;
+  }
+
+  .controls { display:flex; gap:10px; justify-content:center; margin-top:12px; }
+
+  .btn-small {
+    padding:8px 12px; border-radius:10px; border:none; cursor:pointer; background:var(--pink-2); color:white; font-size:14px;
+  }
+  .btn-small:hover{ transform:scale(1.03); }
+
+
+  .typing-caret { display:inline-block; width:2px; background:#333; margin-left:6px; animation:blink 900ms steps(2,start) infinite; vertical-align:middle; height:1.05em; }
+  @keyframes blink { 50%{opacity:0} }
+
+  .modal {
+    position:fixed; inset:0; display:flex; align-items:center; justify-content:center;
+    background: rgba(0,0,0,0.45); z-index:9999; opacity:0; pointer-events:none; transition:opacity .2s;
+  }
+  .modal.show{ opacity:1; pointer-events:auto; }
+  .modal-card {
+    background:white; padding:18px; border-radius:14px; max-width:460px; width:92%; text-align:center; transform:translateY(20px); transition:transform .35s;
+  }
+  .modal.show .modal-card{ transform:translateY(0) }
+  .modal-card img{ width:220px; max-width:80%; display:block; margin:0 auto 8px; }
+  .modal-card h3{ margin:6px 0 0; color:var(--accent) }
+  .modal-actions{ display:flex; gap:10px; justify-content:center; margin-top:12px; }
+
+
+  @media (max-width:600px){
+    .certificate{ width:92%; padding:18px; }
+    .cert-inner{ padding:18px; }
+    .editable { font-size:22px; min-width:140px; }
+  }
+
+  .close-btn {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  font-size: 22px;
+  color: #ff4b93;
+  cursor: pointer;
+  font-weight: bold;
+  transition: .2s;
+}
+.close-btn:hover {
+  color: #ff006e;
+  transform: scale(1.15);
+}
+
+
+</style>
+</head>
+<body>
+
+<script>
+function createHeart() {
+  const heart = document.createElement('div');
+  heart.classList.add('heart');
+  heart.innerHTML = '💗';
+  heart.style.left = Math.random() * 100 + 'vw';
+  heart.style.animationDuration = (3 + Math.random() * 3) + 's';
+  document.body.appendChild(heart);
+  setTimeout(() => heart.remove(), 6000);
+}
+setInterval(createHeart, 500);
+</script>
+
+<div id="landingPage">
+  <img id="landingGif" src="assets/cathearts.gif" alt="Cute GIF" />
+  <h2>Hi Love! 💗</h2>
+  <p style="color:#ff8fbd;">I love youuuu, pindot mo na yung uki, iayak ako dito kapag hindi mo pinindot.</p>
+
+  <div class="landing-buttons">
+    <button class="landing-btn enter">Uki 💕</button>
+    <button class="landing-btn exit">Nu-uh 😭</button>
+  </div>
+</div>
+
+<div id="mainContent">
+  <div class="container">
+    <h1>For My Love 💕</h1>
+    <p style="color:#ff8fbd;">Happy 2nd Monthsarry, love. Enjoy this, I made it for you 💗</p>
+
+    <button onclick="toggleMsg()">💌 Message</button>
+    <button onclick="toggleSong()">🎵 My song for you</button>
+    <button onclick="toggleTulips()">🌷 Flowers for You Loveyyy</button>
+    <button onclick="toggleCert()">❤️ For my Best BF evaaa</button>
+
+    <div id="messageBox" class="box hidden" style="position:relative;">
+      <span class="close-btn" onclick="closeBox('messageBox')">×</span>
+      <h2>My Message for my lovey</h2>
+      <div id="typed"></div>
+    </div>
+
+    <div id="songBox" class="box hidden" style="position:relative;">
+      <span class="close-btn" onclick="closeBox('songBox')">×</span>
+      <h2>Songs that remind me of you 🎶</h2>
+
+      <div class="song-card">
+        <img src="assets/I'llbe.jpg" />
+        <div>
+           <p><strong>Edwin McCain – I'll Be</strong></p>
+          <audio controls class="audio-control">
+            <source src="assets/I'll Be.mp3" type="audio/mp3" />
+          </audio>
+        </div>
+      </div>
+
+      <div class="song-card">                      
+        <img src="assets/Sleeptonight.jpg" />
+        <div>
+            <p><strong>December Avenue – Sleep Tonight</strong></p>
+          <audio controls class="audio-control">
+            <source src="assets/SleepTonight.mp3" type="audio/mp3" />
+          </audio>
+        </div>
+      </div>
+
+       <div class="song-card">
+        <img src="assets/Iris.jpg" />
+        <div>
+          <p><strong>Goo Goo Dolls – Iris</strong></p>
+          <audio controls class="audio-control">
+            <source src="assets/Iris.mp3" type="audio/mp3" />
+          </audio>
+        </div>
+      </div>
+
+      <div class="song-card">
+        <img src="assets/kalapastangan.jpg" />
+        <div>
+            <p><strong>Fitterkarma – Kalapastangan Lyrics </strong></p>
+          <audio controls class="audio-control">
+            <source src="assets/Kalapastangan.mp3" type="audio/mp3" />
+          </audio>
+        </div>
+      </div>
+    </div>
+
+    <div id="tulipBox" class="box hidden" style="position:relative;">
+      <span class="close-btn" onclick="closeBox('tulipBox')">×</span>
+      <h2>For you, My Handsome Man🌷💗</h2>
+      <p style="color:#ff6fa9;">A bouquet of flowers because you deserve it.</p>
+      <img src="assets/flowers.gif" alt="Tulip Bouquet" />
+    </div>
+
+
+    <div id="certBox" class="box hidden" style="position:relative;">
+      <span class="close-btn" onclick="closeBox('certBox')">×</span>
+      <div class="certificate-wrap">
+        <div class="certificate" id="inlineCert">
+          <div class="gold-corner tl">★</div>
+          <div class="gold-corner tr">★</div>
+          <div class="gold-corner bl">★</div>
+          <div class="gold-corner br">★</div>
+
+          <div class="cert-inner">
+            <div class="cert-top">World's greatest boyfriend evaaaaaa!!! </div>
+            <div class="cert-sub">presented to my love</div>
+
+
+            <div>
+              <span id="editableName" class="editable" contenteditable="true" aria-label="Edit recipient name">justine Señoron</span>
+              <span id="nameCaret" class="typing-caret" style="display:none"></span>
+            </div>
+
+            <div class="cert-line"></div>
+
+
+            <div class="cert-reason" id="fixedReason">
+              thank you for being a good and loving boyfriend to me. i love you with all of my heart.
+            </div>
+
+            <div class="cert-footer">
+              <div id="certDate">December 11, 2025 • happy second monthsarry</div>
+              <div class="seal">THE<br>BEST</div>
+              <div id="certSign"><em>Signed:</em><br><span id="signatureText">Estela</span></div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+       <div class="controls">
+              <button class="btn-small" id="awardBtn">Award ✨</button>
+              <button onclick="downloadCertPNG()">Download PNG</button>
+              <button class="btn-small" id="resetBtn">Reset</button>
+            </div>
+    </div>
+
+  </div>
+</div>
+
+<div id="celebrateModal" class="modal" aria-hidden="true">
+  <div class="modal-card">
+    <img src="assets/hapicat.gif" alt="celebration gif" />
+    <h3>Certificate For my Wonderful Baby 💖</h3>
+    <p>Share it, print it, or keep it forever.</p>
+    <div class="modal-actions">
+      <button id="closeModal">Close</button>
+      <button id="downloadModalBtn">Download as PNG</button>
+    </div>
+  </div>
+</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+<script>
+
+const landingGif = document.getElementById('landingGif');
+const enterBtn = document.querySelector('.enter');
+const exitBtn = document.querySelector('.exit');
+const mainContent = document.getElementById('mainContent');
+
+enterBtn.addEventListener('click', () => {
+  landingGif.src = "assets/hapicat.gif";
+  setTimeout(() => {
+    document.getElementById('landingPage').style.display = 'none';
+    mainContent.style.display = 'block';
+    setTimeout(() => mainContent.classList.add('show'), 50);
+  }, 600);
+});
+
+exitBtn.addEventListener('click', () => {
+  landingGif.src = "assets/catsad.gif";
+  exitBtn.style.transform = `translate(${Math.random()*200-100}px, ${Math.random()*200-100}px)`;
+});
+
+function toggle(id) {
+  const el = document.getElementById(id);
+  el.classList.toggle('hidden');
+  setTimeout(() => el.classList.toggle('show'), 40);
+}
+
+function toggleMsg() { toggle('messageBox'); typeMessage(); }
+function toggleSong() { toggle('songBox'); }
+function toggleTulips() { toggle('tulipBox'); }
+function toggleCert() { toggle('certBox'); }
+
+
+const messageText = `Hi loveyyy, kala mo wala nakong gift sayo  no? HAHAHAH first of all, I just want to say thank you for everything you’ve done for me like super dami and I’m so thankful for that. You treat me so well, you treat me like I’m a princess. You do everything for me, you buy me stuff, you even libre me. Thank you for being such a gentleman, for always caring, for always being worried for me, for taking care of me, for lecturing me, and for being galit whenever I do stupid stuff HAHAHAHA.
+
+Thank you for always guiding me, whether sa daan or sa mga bagay na balak kong gawin na alam mong hindi pwede. Thank you for teaching me what I should do without belittling me. Thank you for not getting tired of me, thank you for appreciating me, thank you for complimenting me even when sometimes I don’t feel that pretty yet you never fail to make me feel loved.
+
+Sorry for doing dumb stuff minsan, like making you mad, tampo, or selos. Minsan nasasaktan pa kita, yet ikaw pa rin yung nagpapakumbaba and you always say sorry first. Sorry po. Thank you for always checking on me and for always being there for me.
+
+Sorry po if I can’t give you the best sana in this way man lang, I can show you how much I love and adore you. And about the watch… please don’t mind the price ha? You deserve so much more nga. Take care of it po. I hope you’ll like it.
+
+Sorry ito lang nabigay ko I’m not good at sulat eh, so I made this para maintindihan mo rin, baka sabihin mo reseta HAHAHAHAHA.
+
+Anyway, Happy 2nd month, baby loveloveeee. I may not be the best girlfriend, but I’ll try my very best to give you everything I’ve got. Sorry po if we often argue because of me. Sana huwag kang mapagod or magsawa, kasi iiyak ako. I love you so much. Thank you for loving me unconditionally.
+
+If ever you feel alone, or parang feeling mo walang nandiyan for you, don’t forget that I’m always here. I’ll listen, ha? Kahit magpuyat pa tayo I’d rather hear you nag than see you sad and crying, hiding your feelings behind a smile.
+
+And love, I know sometimes you feel heavy because of your family problems. I just want you to know that you don’t have to carry everything alone. You’re strong, but you don’t always have to be. When it gets too much, lean on me. Let me be your safe place, your calm, your comfort. I’ll stay with you through everything. you’re never alone, I love you loveeeeeeee!!! 💗`;
+
+const paragraphs = messageText.split('\n\n');
+function typeMessage() {
+  const textContainer = document.getElementById("typed");
+  textContainer.innerHTML = "";
+  let paraIndex = 0;
+  function typeNext() {
+    if (paraIndex >= paragraphs.length) return;
+    const p = document.createElement('p');
+    textContainer.appendChild(p);
+    let i = 0;
+    function typeChar() {
+      if (i < paragraphs[paraIndex].length) {
+        p.innerHTML += paragraphs[paraIndex].charAt(i);
+        i++;
+        setTimeout(typeChar, 35);
+      } else {
+        paraIndex++;
+        setTimeout(typeNext, 200);
+      }
+    }
+    typeChar();
+  }
+  typeNext();
+}
+
+
+const audios = document.querySelectorAll('.audio-control');
+audios.forEach(audio => {
+  audio.addEventListener('play', () => {
+    audios.forEach(other => { if(other !== audio) other.pause(); });
+  });
+});
+
+
+const editableName = document.getElementById('editableName');
+const nameCaret = document.getElementById('nameCaret');
+const awardBtn = document.getElementById('awardBtn');
+const celebrateModal = document.getElementById('celebrateModal');
+const closeModal = document.getElementById('closeModal');
+const downloadModalBtn = document.getElementById('downloadModalBtn');
+const downloadCertBtn = document.getElementById('downloadCertBtn');
+const resetBtn = document.getElementById('resetBtn');
+
+function typeText(targetEl, text, caretEl, speed = 40){
+  return new Promise(resolve=>{
+    targetEl.textContent = '';
+    caretEl.style.display = 'inline-block';
+    let i = 0;
+    function step(){
+      if(i < text.length){
+        targetEl.textContent += text.charAt(i);
+        i++;
+        setTimeout(step, speed + Math.random()*22);
+      } else {
+        caretEl.style.display = 'none';
+        resolve();
+      }
+    }
+    step();
+  });
+}
+
+async function awardCertificateInline(){
+
+  let name = editableName.textContent.trim();
+  if(!name) {
+
+    editableName.focus();
+    editableName.classList.add('pulse');
+    setTimeout(()=> editableName.classList.remove('pulse'), 400);
+    return;
+  }
+
+
+  editableName.setAttribute('contenteditable', 'false');
+  editableName.style.opacity = '.28';
+
+
+  await typeText(editableName, name, nameCaret, 38);
+
+
+  const cert = document.getElementById('inlineCert');
+  cert.style.transform = 'scale(.98)';
+  cert.style.transition = 'transform .15s';
+  setTimeout(()=> { cert.style.transform = 'scale(1)'; cert.style.transition = 'transform .45s cubic-bezier(.2,.9,.25,1)'; }, 90);
+
+
+  setTimeout(()=> showCelebrateModal(), 420);
+}
+
+function showCelebrateModal(){
+  celebrateModal.classList.add('show');
+  celebrateModal.setAttribute('aria-hidden','false');
+}
+
+function hideCelebrateModal(){
+  celebrateModal.classList.remove('show');
+  celebrateModal.setAttribute('aria-hidden','true');
+
+  editableName.setAttribute('contenteditable','true');
+  editableName.style.opacity = '1';
+}
+
+closeModal.addEventListener('click', hideCelebrateModal);
+celebrateModal.addEventListener('click', (e)=> { if(e.target === celebrateModal) hideCelebrateModal(); });
+
+awardBtn.addEventListener('click', (e)=>{
+  awardCertificateInline();
+});
+
+
+function downloadCertificateImage(){
+  const certEl = document.getElementById('inlineCert');
+
+  html2canvas(certEl, { scale: 2, backgroundColor: null }).then(canvas=>{
+    const a = document.createElement('a');
+    a.href = canvas.toDataURL('image/png');
+    a.download = 'certificate.png';
+    a.click();
+  }).catch(err=>{
+    alert('Download failed — try reloading the page.');
+  });
+}
+downloadModalBtn.addEventListener('click', () => { downloadCertificateImage(); hideCelebrateModal(); });
+downloadCertBtn.addEventListener('click', downloadCertificateImage);
+
+
+resetBtn.addEventListener('click', () => {
+  editableName.textContent = 'justine Señoron';
+  document.getElementById('signatureText').textContent = 'Estela';
+  editableName.setAttribute('contenteditable','true');
+  editableName.style.opacity = '1';
+});
+
+
+editableName.addEventListener('keydown', (e) => {
+  if(e.key === 'Enter'){
+    e.preventDefault();
+    awardCertificateInline();
+
+    editableName.blur();
+  }
+});
+
+
+const styleEl = document.createElement('style');
+styleEl.innerHTML = `
+@keyframes pulseAnim { 0% { transform: scale(1) } 50% { transform: scale(1.02) } 100% { transform: scale(1) } }
+.pulse { animation: pulseAnim .35s ease; }
+`;
+document.head.appendChild(styleEl);
+
+
+function toggle(id) {
+  const el = document.getElementById(id);
+  el.classList.toggle('hidden');
+  setTimeout(() => el.classList.toggle('show'), 40);
+}
+function toggleMsg() { toggle('messageBox'); typeMessage(); }
+function toggleSong() { toggle('songBox'); }
+function toggleTulips() { toggle('tulipBox'); }
+function toggleCert() { toggle('certBox'); }
+
+
+const paragraph = messageText.split('\n\n');
+
+if(typeof typeMessage !== 'function'){
+  function typeMessage() {
+    const textContainer = document.getElementById("typed");
+    textContainer.innerHTML = "";
+    let paraIndex = 0;
+    function typeNext() {
+      if (paraIndex >= paragraphs.length) return;
+      const p = document.createElement('p');
+      textContainer.appendChild(p);
+      let i = 0;
+      function typeChar() {
+        if (i < paragraphs[paraIndex].length) {
+          p.innerHTML += paragraphs[paraIndex].charAt(i);
+          i++;
+          setTimeout(typeChar, 35);
+        } else {
+          paraIndex++;
+          setTimeout(typeNext, 200);
+        }
+      }
+      typeChar();
+    }
+    typeNext();
+  }
+}
+
+
+editableName.addEventListener('focus', ()=> { editableName.style.boxShadow = '0 6px 18px rgba(255,120,170,.08)'; });
+editableName.addEventListener('blur', ()=> { editableName.style.boxShadow = 'none'; });
+
+function closeBox(id) {
+  const el = document.getElementById(id);
+  el.classList.remove('show');
+  setTimeout(() => el.classList.add('hidden'), 200);
+}
+
+async function downloadCertPNG() {
+  const cert = document.getElementById("inlineCert");   
+
+
+  const clone = cert.cloneNode(true);
+
+
+  const wrap = document.createElement("div");
+  wrap.style.position = "fixed";
+  wrap.style.top = "-9999px";
+  wrap.style.left = "-9999px";
+  wrap.style.background = "#ffffff";
+  wrap.style.padding = "20px";
+
+  wrap.appendChild(clone);
+  document.body.appendChild(wrap);
+
+
+  const canvas = await html2canvas(clone, {
+    scale: 3,
+    backgroundColor: "#ffffff",
+    useCORS: true
+  });
+
+
+  const link = document.createElement("a");
+  link.href = canvas.toDataURL("image/png");
+  link.download = "certificate.png";
+  link.click();
+
+
+  document.body.removeChild(wrap);
+}
+
+
+
+</script>
+
+</body>
+</html>
